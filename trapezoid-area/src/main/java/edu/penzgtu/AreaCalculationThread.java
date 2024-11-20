@@ -6,29 +6,32 @@ import java.util.concurrent.Callable;
 
 public class AreaCalculationThread implements Callable<List<Double>> {
 
-    private double start;
-    private double end;
-    private int numIntervals;
+    private double start; // Начальное значение
+    private double end; // Конечное значение
+    private int numberOfIntervals; // Количество интервалов на данной области
 
-    public AreaCalculationThread(double start, double end, int numIntervals) {
+    public AreaCalculationThread(double start, double end, int numberOfIntervals) {
         this.start = start;
         this.end = end;
-        this.numIntervals = numIntervals;
+        this.numberOfIntervals = numberOfIntervals;
     }
 
+    // Функция, образующая кривую
     private double function(double x) {
         return -Math.pow((x - 1500), 2) / 4000 + 1000;
     }
 
+    // Логика потока
     @Override
     public List<Double> call() {
         List<Double> areas = new ArrayList<>();
-        double step = (end - start) / numIntervals;
-        double localRectanglesArea = 0;
-        double localTrapezoidsArea = 0;
-        double localSimpsonArea = 0;
+        double step = (end - start) / numberOfIntervals;
 
-        for (int i = 0; i < numIntervals; i++) {
+        double localRectanglesArea = 0; // Площадь области на данном потоке (метод прямоугольников)
+        double localTrapezoidsArea = 0; // Площадь области на данном потоке (метод трапеций)
+        double localSimpsonArea = 0; // Площадь области на данном потоке (метод Симпсона)
+
+        for (int i = 0; i < numberOfIntervals; i++) {
             double x = start + i * step;
             double y = function(x);
             double yNext = function(x + step);
