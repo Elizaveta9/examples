@@ -10,7 +10,6 @@ public class AreaCalculator {
     public static List<Double> calculate(int numberOfThreads) throws ExecutionException, InterruptedException {
         int minBound = 0;
         int maxBound = 2500;
-//        int numIntervals = maxBound - minBound;
         int numIntervals = 1_000_000_000;
         double intervalWidth = (maxBound - minBound) / (double) numberOfThreads;
 
