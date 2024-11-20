@@ -30,6 +30,7 @@ public class Main {
         long endTime = System.nanoTime();
         System.out.printf("Area Rectangles: %f\n", areas.get(0));
         System.out.printf("Area Trapezoids: %f\n", areas.get(1));
+        System.out.printf("Area Simpson: %f\n", areas.get(2));
         System.out.println("Execution time (ms): " + (endTime - startTime) / 1000000);
     }
 }
