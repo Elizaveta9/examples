@@ -1,60 +1,37 @@
 package edu.penzgtu;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
-public class AreaCalculationThread implements Callable<List<Double>> {
+public class AreaCalculationThread implements Callable<Double> {
 
     private double start; // Начальное значение
     private double end; // Конечное значение
     private int numberOfIntervals; // Количество интервалов на данной области
 
-    public AreaCalculationThread(double start, double end, int numberOfIntervals) {
+    private CalculateStrategy calculateStrategy;
+
+    public AreaCalculationThread(double start, double end, int numberOfIntervals, CalculateStrategy calculateStrategy) {
         this.start = start;
         this.end = end;
         this.numberOfIntervals = numberOfIntervals;
-    }
-
-    // Функция, образующая кривую
-    private double function(double x) {
-        return -Math.pow((x - 1500), 2) / 4000 + 1000;
+        this.calculateStrategy = calculateStrategy;
     }
 
     // Логика потока
     @Override
-    public List<Double> call() {
-        List<Double> areas = new ArrayList<>();
+    public Double call() {
         double step = (end - start) / numberOfIntervals;
 
-        double localRectanglesArea = 0; // Площадь области на данном потоке (метод прямоугольников)
-        double localTrapezoidsArea = 0; // Площадь области на данном потоке (метод трапеций)
-        double localSimpsonArea = 0; // Площадь области на данном потоке (метод Симпсона)
+        double localArea = 0; // Площадь области на данном потоке
 
         for (int i = 0; i < numberOfIntervals; i++) {
             double x = start + i * step;
-            double y = function(x);
-            double yNext = function(x + step);
+            double y = Function.getY(x);
 
-            // Метод прямоугольников
-            double currentRectangleArea = Math.abs(y * step);
-            localRectanglesArea += currentRectangleArea;
-
-            // Метод трапеций
-            double currentTrapezoidArea = Math.abs((y + yNext) * step / 2);
-            localTrapezoidsArea += currentTrapezoidArea;
-
-            // Метод Симпсона
-            double yMid = function((x + x + step) / 2);
-            double currentSimpsonArea = Math.abs((y + 4 * yMid + yNext) * step / 6);
-            localSimpsonArea += currentSimpsonArea;
+            double currentArea = calculateStrategy.calculate(x, y, step);
+            localArea += currentArea;
         }
 
-        areas.add(localRectanglesArea);
-        areas.add(localTrapezoidsArea);
-        areas.add(localSimpsonArea);
-
-        System.out.printf("Thread: I am counting [%f; %f) with step %f\n", start, end, step);
-        return areas;
+        return localArea;
     }
 }

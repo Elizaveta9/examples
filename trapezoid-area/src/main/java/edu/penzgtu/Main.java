@@ -1,6 +1,5 @@
 package edu.penzgtu;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Main {
@@ -21,27 +20,38 @@ public class Main {
             return;
         }
 
-        /*
-            Подсчитанные площади
-            0 - методом прямоугольников
-            1 - методом трапеций
-            2 - методом Симпсона
-         */
-        List<Double> areas;
+        double area;
+        long startTime;
+        long endTime;
 
-        long startTime = System.nanoTime(); // Запуск таймера
         try {
-            areas = AreaCalculator.calculate(numberOfThreads);
+            // Подсчет методом прямоугольников
+            startTime = System.nanoTime();
+            area = AreaCalculator.calculate(numberOfThreads, new RectanglesCalculateStrategy());
+            endTime = System.nanoTime();
+            printInfo("rectangles", area, startTime, endTime);
+
+            // Подсчет методом трапеций
+            startTime = System.nanoTime();
+            area = AreaCalculator.calculate(numberOfThreads, new TrapezoidsCalculateStrategy());
+            endTime = System.nanoTime();
+            printInfo("trapezoids", area, startTime, endTime);
+
+            // Подсчет методом Симпсона
+            startTime = System.nanoTime();
+            area = AreaCalculator.calculate(numberOfThreads, new SimpsonCalculateStrategy());
+            endTime = System.nanoTime();
+            printInfo("simpson", area, startTime, endTime);
+
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        long endTime = System.nanoTime(); // Конец таймера
+    }
 
-        System.out.printf("Area Rectangles: %f\n", areas.get(0));
-        System.out.printf("Area Trapezoids: %f\n", areas.get(1));
-        System.out.printf("Area Simpson: %f\n", areas.get(2));
+    private static void printInfo(String method, double area, long startTime, long endTime) {
+        System.out.printf("Area (%s): %f\n", method, area);
         System.out.println("Execution time (ms): " + (endTime - startTime) / 1000000);
     }
 }
