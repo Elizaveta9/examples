@@ -1,5 +1,10 @@
 package edu.penzgtu;
 
+import edu.penzgtu.areacalculator.AreaCalculator;
+import edu.penzgtu.calculatestrategy.impl.RectanglesCalculateStrategy;
+import edu.penzgtu.calculatestrategy.impl.SimpsonCalculateStrategy;
+import edu.penzgtu.calculatestrategy.impl.TrapezoidsCalculateStrategy;
+
 import java.util.concurrent.ExecutionException;
 
 public class Main {

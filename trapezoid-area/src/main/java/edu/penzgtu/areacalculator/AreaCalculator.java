@@ -1,4 +1,6 @@
-package edu.penzgtu;
+package edu.penzgtu.areacalculator;
+
+import edu.penzgtu.calculatestrategy.CalculateStrategy;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

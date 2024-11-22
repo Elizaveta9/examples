@@ -1,4 +1,7 @@
-package edu.penzgtu;
+package edu.penzgtu.calculatestrategy.impl;
+
+import edu.penzgtu.calculatestrategy.CalculateStrategy;
+import edu.penzgtu.function.Function;
 
 // Метод Симпсона
 public class SimpsonCalculateStrategy implements CalculateStrategy {

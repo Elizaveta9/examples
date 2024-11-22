@@ -1,4 +1,6 @@
-package edu.penzgtu;
+package edu.penzgtu.calculatestrategy.impl;
+
+import edu.penzgtu.calculatestrategy.CalculateStrategy;
 
 // Метод прямоугольников
 public class RectanglesCalculateStrategy implements CalculateStrategy {

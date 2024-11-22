@@ -1,4 +1,4 @@
-package edu.penzgtu;
+package edu.penzgtu.function;
 
 // Функция, образующая кривую
 public class Function {

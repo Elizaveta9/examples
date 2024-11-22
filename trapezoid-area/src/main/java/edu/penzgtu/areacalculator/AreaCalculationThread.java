@@ -1,4 +1,7 @@
-package edu.penzgtu;
+package edu.penzgtu.areacalculator;
+
+import edu.penzgtu.calculatestrategy.CalculateStrategy;
+import edu.penzgtu.function.Function;
 
 import java.util.concurrent.Callable;
 
